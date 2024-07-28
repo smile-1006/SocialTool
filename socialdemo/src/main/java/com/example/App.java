@@ -3,8 +3,6 @@ package com.example;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,17 +14,20 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class App {
 
-    private static final List<String> SOCIAL_MEDIA_DOMAINS = Arrays.asList("linkedin.com", "facebook.com", "instagram.com");
+    // private static final List<String> SOCIAL_MEDIA_DOMAINS = Arrays.asList("linkedin.com", "facebook.com", "instagram.com");
 
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Please provide the full URL as a command-line argument.");
+            return;
+        }
+
+        String socialMediaUrl = args[0];
+
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         WebDriver driver = setupWebDriver();
 
-        String companyDomain = "exampleCompany"; // Replace with the actual company domain you want to check
-        for (String socialDomain : SOCIAL_MEDIA_DOMAINS) {
-            String socialMediaUrl = "https://" + socialDomain + "/" + companyDomain;
-            checkSocialMediaActivity(driver, socialMediaUrl);
-        }
+        checkSocialMediaActivity(driver, socialMediaUrl);
 
         driver.quit();
     }
